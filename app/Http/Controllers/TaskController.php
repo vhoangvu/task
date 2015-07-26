@@ -23,15 +23,10 @@ class TaskController extends Controller {
 		return $tasks->toJson ();
 	}
 	public function ajax_save(Request $request, TaskRepository $repository) {
-		$validator = Validator::make($request, [
+		$this->validate($request, [
 				"task.name" => "required|max:500",
 				"task.due_date" => "required",
 				]);
-		
-		if ($validator->fails()) {
-			$task = new stdClass();
-			return $tasks->toJson ();
-		}
 		
 		$task = $repository->insert ( $request->input ( "task" ) );
 		return $task->toJson ();
