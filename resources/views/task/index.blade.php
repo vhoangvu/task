@@ -31,6 +31,8 @@
 <link rel="stylesheet" href="lib/flipclock.css">
 <script src="lib/flipclock.min.js"></script>
 
+<script src="lib/notify.min.js"></script>
+
 <script src="lib/bootstrap.validator.min.js"></script>
 
 <script>
@@ -96,11 +98,16 @@
 								</tr>
 								<template v-repeat="items" track-by="id">
 									<tr class="@{{is_due == true ? 'due' : ''}}">
-										<td>@{{id}}</td>
+										<td id="task_id_@{{id}}">@{{id}}</td>
 										<td>@{{name}}</td>
 										<td>@{{due_date}}</td>
 										<td><input v-on="click : complete" type="checkbox"></td>
 									</tr>
+									<template v-if="is_due == true">
+										<script>
+											$("#task_id_@{{id}}").notify("Due Task");
+										</script>
+									</template>
 								</template>
 							</table>
 						</div>
