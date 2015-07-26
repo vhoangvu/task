@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Model\Task;
 use App\Repository\TaskRepository;
 
+use Validator;
+
 class TaskController extends Controller {
 	/**
 	 * Show list of task.
@@ -21,7 +23,7 @@ class TaskController extends Controller {
 		return $tasks->toJson ();
 	}
 	public function ajax_save(Request $request, TaskRepository $repository) {
-		$this->validate($request, [
+		$validator = Validator::make($request, [
 				"task.name" => "required|max:500",
 				"task.due_date" => "required",
 				]);
