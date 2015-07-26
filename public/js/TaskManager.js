@@ -89,6 +89,7 @@ TaskManager.prototype.checkDueDate = function(currentDate) {
 				var dueObject = eval("items.obj_" + dueId);
 				if (dueObject && dueObject.is_due == false) {
 					dueObject.$set("is_due", true);
+					$("#task_id_" + dueId).notify("Due Task", {autoHide: true});
 				}
 			}
 		},
