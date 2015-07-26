@@ -10,35 +10,37 @@ use App\Repository\TaskRepository;
 use Validator;
 
 class TaskController extends Controller {
-	/**
-	 * Show list of task.
-	 *
-	 * @return Response
-	 */
-	public function index(Request $request, TaskRepository $repository) {
+	private $request;
+	private $repository;
+	
+	public function __construct(Request $request, TaskRepository $repository) {
+		$this->request = $request;
+		$this->repository = $repository;
+	}
+	public function index() {
 		return view ( "task.index" );
 	}
-	public function ajax_list(TaskRepository $repository) {
-		$tasks = $repository->read_list_by ( 'completed', false );
+	public function ajax_list() {
+		$tasks = $this->repository->read_list_by ( 'completed', false );
 		return $tasks->toJson ();
 	}
-	public function ajax_save(Request $request, TaskRepository $repository) {
-		$this->validate($request, [
+	public function ajax_save() {
+		$this->validate($this->request, [
 				"task.name" => "required|max:500",
 				"task.due_date" => "required",
 				]);
 		
-		$task = $repository->insert ( $request->input ( "task" ) );
+		$task = $this->repository->insert ( $this->request->input ( "task" ) );
 		return $task->toJson ();
 	}
-	public function ajax_check_duedate(Request $request, TaskRepository $repository) {
+	public function ajax_check_duedate() {
 		$return_columns = array ();
 		$return_columns [] = "id";
-		$tasks = $repository->read_list_by ( "due_date", $request->input ( "due_date" ), "<=", $return_columns );
+		$tasks = $this->repository->read_list_by ( "due_date", $this->request->input ( "due_date" ), "<=", $return_columns );
 		return $tasks->toJson ();
 	}
-	public function ajax_completed(Request $request, TaskRepository $repository, $id) {
-		$task = $repository->update ( ['completed'=>true], $id );
+	public function ajax_completed($id) {
+		$task = $this->repository->update ( ['completed'=>true], $id );
 		return $id;
 	}
 }
