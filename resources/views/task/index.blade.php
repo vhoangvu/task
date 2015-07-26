@@ -45,6 +45,10 @@
 .padding-top {
 	padding-top: 10px;
 }
+
+.due {
+	text-color: red;
+}
 </style>
 </head>
 <body>
@@ -91,7 +95,7 @@
 									<th>Completed</th>
 								</tr>
 								<template v-repeat="items" track-by="id">
-									<tr class="@{{is_due == true ? 'warning' : ''}}">
+									<tr class="@{{is_due == true ? 'due' : ''}}">
 										<td>@{{id}}</td>
 										<td>@{{name}}</td>
 										<td>@{{due_date}}</td>
