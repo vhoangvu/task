@@ -47,7 +47,7 @@
 }
 
 .due {
-	text-color: red;
+	color: red;
 }
 </style>
 </head>
