@@ -103,9 +103,12 @@
 										<td>@{{due_date}}</td>
 										<td><input v-on="click : complete" type="checkbox"></td>
 									</tr>
+									<script>
+										var task_column_id = "task_id_@{{id}}";
+									</script>
 									<template v-if="is_due == true">
 										<script>
-											$("#task_id_@{{id}}").notify("Due Task");
+											$("#" + task_column_id).notify("Due Task");
 										</script>
 									</template>
 								</template>
