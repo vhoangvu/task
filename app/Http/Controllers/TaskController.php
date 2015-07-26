@@ -21,8 +21,18 @@ class TaskController extends Controller {
 		return $tasks->toJson ();
 	}
 	public function ajax_save(Request $request, TaskRepository $repository) {
-		$tasks = $repository->insert ( $request->input ( "task" ) );
-		return $tasks->toJson ();
+		$this->validate($request, [
+				'task[name]' => 'required|max:500',
+				'task[due_date]' => 'required',
+				]);
+		
+		if ($validator->fails()) {
+			$task = new stdClass();
+			return $tasks->toJson ();
+		}
+		
+		$task = $repository->insert ( $request->input ( "task" ) );
+		return $task->toJson ();
 	}
 	public function ajax_check_duedate(Request $request, TaskRepository $repository) {
 		$return_columns = array ();
@@ -31,7 +41,7 @@ class TaskController extends Controller {
 		return $tasks->toJson ();
 	}
 	public function ajax_completed(Request $request, TaskRepository $repository, $id) {
-		$tasks = $repository->delete ( $id );
+		$task = $repository->delete ( $id );
 		return $id;
 	}
 }

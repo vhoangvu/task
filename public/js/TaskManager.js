@@ -60,9 +60,11 @@ var TaskManager = function() {
 						dataType : "JSON",
 						data : formData,
 						success : function(result) {
-							self.vue.$data.items.$set("obj_" + result.id, result);
-							$("#task_form")[0].reset();
-							$("#due_date").parent().removeClass("has-error").removeClass("has-success");
+							if (result.id) {
+								self.vue.$data.items.$set("obj_" + result.id, result);
+								$("#task_form")[0].reset();
+								$("#due_date").parent().removeClass("has-error").removeClass("has-success");
+							}
 						}
 					});
 				}
