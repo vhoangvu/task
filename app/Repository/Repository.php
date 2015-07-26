@@ -26,6 +26,9 @@ abstract class Repository implements IRepository {
 	public function insert(array $data) {
 		return $this->model->create ( $data );
 	}
+	public function update(array $data, $id) {
+		return $this->model->where ( 'id', '=', $id )->update ( $data );
+	}
 	public function delete($id) {
 		return $this->model->destroy ( $id );
 	}

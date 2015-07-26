@@ -17,7 +17,7 @@ class TaskController extends Controller {
 		return view ( "task.index" );
 	}
 	public function ajax_list(TaskRepository $repository) {
-		$tasks = $repository->read_list ();
+		$tasks = $repository->read_list_by ( 'completed', false );
 		return $tasks->toJson ();
 	}
 	public function ajax_save(Request $request, TaskRepository $repository) {
@@ -41,7 +41,7 @@ class TaskController extends Controller {
 		return $tasks->toJson ();
 	}
 	public function ajax_completed(Request $request, TaskRepository $repository, $id) {
-		$task = $repository->delete ( $id );
+		$task = $repository->update ( ['completed'=>true], $id );
 		return $id;
 	}
 }
