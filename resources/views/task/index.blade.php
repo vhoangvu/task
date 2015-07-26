@@ -98,7 +98,7 @@
 								</tr>
 								<template v-repeat="items" track-by="id">
 									<tr class="@{{is_due == true ? 'due' : ''}}">
-										<td id="task_id_@{{id}}">@{{id}}</td>
+										<td><span id="task_id_@{{id}}">@{{id}}</span></td>
 										<td>@{{name}}</td>
 										<td>@{{due_date}}</td>
 										<td><input v-on="click : complete" type="checkbox"></td>
